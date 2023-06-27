@@ -1,21 +1,37 @@
-name: Build and deploy Jekyll site to GitHub Pages
+name: Build and Deploy
 
 on:
   push:
     branches:
-      - main # or master before October 2020
+      - main
 
 jobs:
-  github-pages:
+  build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/cache@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Java
+        uses: actions/setup-java@v2
         with:
-          path: vendor/bundle
-          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile') }}
-          restore-keys: |
-            ${{ runner.os }}-gems-
-      - uses: helaili/jekyll-action@2.0.5    # Choose any one of the Jekyll Actions
-        with:                                # Some relative inputs of your action
-          token: ${{ secrets.GITHUB_TOKEN }}
+          java-version: '17'
+
+      - name: Build Spring Boot project
+        run: ./mvnw clean install
+
+      - name: Set up Ruby
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: 2.7.x
+
+      - name: Build Jekyll site
+        run: |
+          gem install bundler jekyll
+          cd path/to/jekyll/site
+          bundle install
+          bundle exec jekyll build
+
+      - name: Deploy Spring Boot project
+        # Add the necessary deployment steps for your Spring Boot project here
