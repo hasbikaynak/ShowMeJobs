@@ -1,20 +1,19 @@
 package com.showmejobs.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.showmejobs.domain.enums.Seniority;
 import com.showmejobs.domain.enums.WorkType;
 import jakarta.persistence.*;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Setter
 @NoArgsConstructor
 public class Job extends BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,8 +21,7 @@ public class Job extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Seniority seniority;
     private String companyName;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date date;
+    private LocalDateTime date = LocalDateTime.now();
     private BigDecimal salary;
     private String city;
     @Enumerated(EnumType.STRING)
@@ -34,7 +32,7 @@ public class Job extends BaseEntity {
         private String role;
         private Seniority seniority;
         private String companyName;
-        private Date date;
+        private LocalDateTime date;
         private BigDecimal salary;
         private String city;
         private WorkType workType;
@@ -59,7 +57,7 @@ public class Job extends BaseEntity {
             return this;
         }
 
-        public Builder date(Date date) {
+        public Builder date(LocalDateTime date) {
             this.date = date;
             return this;
         }
@@ -109,7 +107,7 @@ public class Job extends BaseEntity {
         return companyName;
     }
 
-    public Date getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 

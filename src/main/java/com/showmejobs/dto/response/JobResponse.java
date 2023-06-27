@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -19,7 +19,7 @@ public class JobResponse {
     private String role;
     private Seniority seniority;
     private String companyName;
-    private Date date;
+    private LocalDateTime date;
     private BigDecimal salary;
     private String city;
     private WorkType workType;
