@@ -4,18 +4,20 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.showmejobs.domain.enums.Seniority;
 import com.showmejobs.domain.enums.WorkType;
 import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
+@Setter
 @NoArgsConstructor
 public class Job extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String role;
     @Enumerated(EnumType.STRING)
     private Seniority seniority;
@@ -28,6 +30,7 @@ public class Job extends BaseEntity {
     private WorkType workType;
 
     public static class Builder {
+        private Long id;
         private String role;
         private Seniority seniority;
         private String companyName;
@@ -35,6 +38,11 @@ public class Job extends BaseEntity {
         private BigDecimal salary;
         private String city;
         private WorkType workType;
+
+        public Builder id(Long id) {
+            this.id = id;
+            return this;
+        }
 
         public Builder role(String role) {
             this.role = role;
@@ -73,6 +81,7 @@ public class Job extends BaseEntity {
 
         public Job build() {
             Job job = new Job();
+            job.id = this.id;
             job.role = this.role;
             job.seniority = this.seniority;
             job.companyName = this.companyName;
@@ -82,6 +91,10 @@ public class Job extends BaseEntity {
             job.workType = this.workType;
             return job;
         }
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getRole() {
@@ -110,5 +123,19 @@ public class Job extends BaseEntity {
 
     public WorkType getWorkType() {
         return workType;
+    }
+
+    @Override
+    public String toString() {
+        return "Job{" +
+                "id=" + id +
+                ", role='" + role + '\'' +
+                ", seniority=" + seniority +
+                ", companyName='" + companyName + '\'' +
+                ", date=" + date +
+                ", salary=" + salary +
+                ", city='" + city + '\'' +
+                ", workType=" + workType +
+                '}';
     }
 }

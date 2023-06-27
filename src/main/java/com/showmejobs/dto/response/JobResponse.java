@@ -15,7 +15,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class JobResponse {
-    private Long id;
+    private String id;
     private String role;
     private Seniority seniority;
     private String companyName;
