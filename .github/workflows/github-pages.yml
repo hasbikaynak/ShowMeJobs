@@ -34,4 +34,7 @@ jobs:
           bundle exec jekyll build
 
       - name: Deploy Spring Boot project
-        # Add the necessary deployment steps for your Spring Boot project here
+        run: |
+          # Example deployment step
+          echo "Deploying Spring Boot project..."
+          # Add your deployment commands here
