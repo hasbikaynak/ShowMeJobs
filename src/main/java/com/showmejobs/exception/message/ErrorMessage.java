@@ -8,4 +8,6 @@ public class ErrorMessage {
 
     public final static String JWTTOKEN_ERROR_MESSAGE = "JWT Token Validation Error: %s";
     public static final String USER_ALREADY_REGISTERED = "User already registered";
+    public static final String ROLE_NOT_FOUND_MESSAGE = "%s role type is not found";
+    public static final String USER_NOT_FOUND_MESSAGE = "User not found with %s email address";
 }

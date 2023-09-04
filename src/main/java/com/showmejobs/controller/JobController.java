@@ -12,18 +12,19 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/job")
-//@CrossOrigin
 @AllArgsConstructor
 public class JobController {
     final private JobService jobService;
 
     //localhost:8080/api/v1/job
+    @PreAuthorize("hasRole('USER')")
     @PostMapping
     public ResponseEntity<SMJResponse> addJob(@Valid @RequestBody final JobRequest jobRequest) {
         SMJResponse response;
@@ -31,7 +32,7 @@ public class JobController {
             jobService.saveJob(jobRequest);
             response = new SMJResponse(ResponseMessage.JOB_SAVE_RESPONSE_MESSAGE, true);
         } catch (final ConflictException exception) {
-            throw new ConflictException(exception.getMessage(), HttpStatus.CONFLICT);
+            response = new SMJResponse(ErrorMessage.JOB_AlREADY_APPLIED, false);
         } catch (final Exception exception) {
             response = new SMJResponse(ResponseMessage.JOB_SAVE_SOMETHING_WENT_WRONG, false);
         }
@@ -39,9 +40,9 @@ public class JobController {
     }
 
     //localhost:8080/api/v1/job/all
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/all")
     public ResponseEntity<List<JobResponse>> getAllJobs() {
-
         try {
             final List<JobResponse> response = jobService.findAllJobs();
             return ResponseEntity.ok(response);
@@ -53,6 +54,7 @@ public class JobController {
     }
 
     //localhost:8080/api/v1/job/{id}
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/{id}")
     public ResponseEntity<JobResponse> getJobById(@PathVariable final String id) {
         try {
@@ -66,6 +68,7 @@ public class JobController {
     }
 
     //localhost:8080/api/v1/job/{id}
+    @PreAuthorize("hasRole('USER')")
     @PutMapping("/{id}")
     public ResponseEntity<SMJResponse> updateJobById(@PathVariable final String id, @Valid @RequestBody final JobRequest jobRequest) {
         try {
@@ -80,6 +83,7 @@ public class JobController {
     }
 
     //localhost:8080/api/v1/job/{id}
+    @PreAuthorize("hasRole('USER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<SMJResponse> deleteJobById(@PathVariable final String id) {
         try {
