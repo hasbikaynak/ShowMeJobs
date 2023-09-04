@@ -1,0 +1,252 @@
+{
+	"info": {
+		"_postman_id": "2b1b757a-0b22-47b7-9061-b4980d3a9f38",
+		"name": "A Show Me Jobs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25619026"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "saveUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\":\"Mehmet\",\r\n    \"lastName\":\"Kaynak\",\r\n    \"email\":\"kaynakhasbi1@gmail.com\",\r\n    \"password\":\"123456\",\r\n    \"phoneNumber\":\"795-719-182\",\r\n    \"address\":\"test\",\r\n    \"zipCode\":\"01-471\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/user/register",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "authenticate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"kaynakhasbi1@gmail.com\",\r\n    \"password\":\"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/user/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Job",
+			"item": [
+				{
+					"name": "saveJob",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJrYXluYWtoYXNiaTFAZ21haWwuY29tIiwiaWF0IjoxNjkzODM2NTI3LCJleHAiOjE2OTM5MjI5Mjd9.bbNa-had8Ciya_fWlIXRXHuAQu0LQwuKdHUGgzApFE2WRZ2H-7WQZ81pxB_Td8Nec8jpTkv6a47IUkRwtCiZyw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"role\":\"Junior Java Developer\",\r\n    \"seniority\": \"JUNIOR\",\r\n    \"companyName\":\"Test1\",\r\n    \"salary\": 5000,\r\n    \"city\": \"Test\",\r\n    \"workType\":\"REMOTE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/job",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"job"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllJobs",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJrYXluYWtoYXNiaTFAZ21haWwuY29tIiwiaWF0IjoxNjkzODM2NTI3LCJleHAiOjE2OTM5MjI5Mjd9.bbNa-had8Ciya_fWlIXRXHuAQu0LQwuKdHUGgzApFE2WRZ2H-7WQZ81pxB_Td8Nec8jpTkv6a47IUkRwtCiZyw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/job/all",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"job",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getJobById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJrYXluYWtoYXNiaTFAZ21haWwuY29tIiwiaWF0IjoxNjkzODM2NTI3LCJleHAiOjE2OTM5MjI5Mjd9.bbNa-had8Ciya_fWlIXRXHuAQu0LQwuKdHUGgzApFE2WRZ2H-7WQZ81pxB_Td8Nec8jpTkv6a47IUkRwtCiZyw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/job/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"job",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateJobById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJrYXluYWtoYXNiaTFAZ21haWwuY29tIiwiaWF0IjoxNjkyMzAzMTkyLCJleHAiOjE2OTIzODk1OTJ9.LDocODyhDWjbzXO5eG5sz3KltPGRaR8XutopnGLozTm3YKSmFJGKWgH7rF5nmB4mUIevG7qZy_BQTzjPNYTtgQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"role\":\"Backend Java Developer\",\r\n    \"seniority\": \"JUNIOR\",\r\n    \"companyName\":\"HSBC\",\r\n    \"salary\": 5000,\r\n    \"city\": \"Wrocław\",\r\n    \"workType\":\"REMOTE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/job/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"job",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteJobById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJrYXluYWtoYXNiaTFAZ21haWwuY29tIiwiaWF0IjoxNjkyMzAzMTkyLCJleHAiOjE2OTIzODk1OTJ9.LDocODyhDWjbzXO5eG5sz3KltPGRaR8XutopnGLozTm3YKSmFJGKWgH7rF5nmB4mUIevG7qZy_BQTzjPNYTtgQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/job/9",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"job",
+								"9"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
