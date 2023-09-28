@@ -1,5 +1,6 @@
 package com.showmejobs.security;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -7,9 +8,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -26,7 +26,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import com.showmejobs.security.jwt.AuthTokenFilter;
 
 @Configuration
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableMethodSecurity
 @AllArgsConstructor
 public class SecurityConfig {
 
@@ -37,9 +37,9 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable) // Disabling CSRF protection
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeRequests(authorize -> authorize
+                .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(new AntPathRequestMatcher("/user/**")).permitAll()
-                        .requestMatchers(pathMatchers(HttpMethod.OPTIONS, "/**")).permitAll() // Permit OPTIONS requests
+                        .requestMatchers(pathMatchers()).permitAll() // Permit OPTIONS requests
                         .requestMatchers(new AntPathRequestMatcher("/actuator/info"), new AntPathRequestMatcher("/actuator/health")).permitAll()
                         .anyRequest().authenticated()
                 )
@@ -49,8 +49,8 @@ public class SecurityConfig {
     }
 
     // Helper method to create RequestMatcher for specific HTTP method and pattern
-    private RequestMatcher pathMatchers(HttpMethod method, String patterns) {
-        return new AntPathRequestMatcher(patterns, method.name());
+    private RequestMatcher pathMatchers() {
+        return new AntPathRequestMatcher("/**", HttpMethod.OPTIONS.name());
     }
 
 
@@ -58,7 +58,7 @@ public class SecurityConfig {
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
-            public void addCorsMappings(CorsRegistry registry) {
+            public void addCorsMappings(@NotNull CorsRegistry registry) {
                 registry.addMapping("/**").allowedOrigins("*").allowedHeaders("*").allowedMethods("*");
             }
         };
@@ -66,20 +66,15 @@ public class SecurityConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return new WebSecurityCustomizer() {
-            @Override
-            public void customize(WebSecurity web) {
-                web.ignoring().requestMatchers(
-                        new AntPathRequestMatcher("/v3/api-docs/**"),
-                        new AntPathRequestMatcher("/swagger-ui.html"),
-                        new AntPathRequestMatcher("/swagger-ui/**"),
-                        new AntPathRequestMatcher("/"),
-                        new AntPathRequestMatcher("/index.html"),
-                        new AntPathRequestMatcher("/css/**"),
-                        new AntPathRequestMatcher("/js/**")
-                );
-            }
-        };
+        return web -> web.ignoring().requestMatchers(
+                new AntPathRequestMatcher("/v3/api-docs/**"),
+                new AntPathRequestMatcher("/swagger-ui.html"),
+                new AntPathRequestMatcher("/swagger-ui/**"),
+                new AntPathRequestMatcher("/"),
+                new AntPathRequestMatcher("/index.html"),
+                new AntPathRequestMatcher("/css/**"),
+                new AntPathRequestMatcher("/js/**")
+        );
     }
 
 

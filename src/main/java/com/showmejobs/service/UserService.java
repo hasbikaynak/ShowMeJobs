@@ -43,7 +43,6 @@ public class UserService {
         Set<Role> roles = new HashSet<>();
         roles.add(role);
 
-
         String encodedPassword = passwordEncoder.encode(registerRequest.getPassword());
 
         final User user = User.builder()

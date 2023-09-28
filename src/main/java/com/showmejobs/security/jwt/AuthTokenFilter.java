@@ -2,6 +2,7 @@ package com.showmejobs.security.jwt;
 
 import java.io.IOException;
 
+import jakarta.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     private static final Logger logger = LoggerFactory.getLogger(AuthTokenFilter.class);
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull FilterChain filterChain) throws ServletException, IOException {
         String jwtToken = parseJwt(request);
 
         try {
@@ -57,7 +58,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         return null;
     }
 
-    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+    protected boolean shouldNotFilter(HttpServletRequest request) {
         AntPathMatcher antPathMatcher = new AntPathMatcher();
         return antPathMatcher.match("user/register", request.getServletPath()) ||
                 antPathMatcher.match("user/login", request.getServletPath());
